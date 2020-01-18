@@ -1,15 +1,55 @@
 package ru.telegram;
 
+import org.jboss.logging.Logger;
 import org.springframework.stereotype.Component;
+import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.exceptions.TelegramApiException;
 
-@Component
+
 public class Bot extends TelegramLongPollingBot {
+	
+	/**
+	 * Логер для бота
+	 */
+	private Logger log = Logger.getLogger(Bot.class);
+	
+	public Bot(DefaultBotOptions options) {
+		super(options);
+	}
 
 	@Override
 	public void onUpdateReceived(Update update) {
-		System.out.println(update.getMessage().getText());
+		//log.info("in update meyhod");
+		new MessageReciever(update.getMessage(), this).start();
+	}
+	
+	private class MessageReciever extends Thread {
+		private Message message;
+		private Bot bot;
+		
+		public MessageReciever(Message message, Bot bot) {
+			this.message = message;
+		}
+		
+		@Override
+		public void run() {
+			log.info("Start thread for new message");
+			System.out.println(message.getText());
+			SendMessage answer = new SendMessage();
+			answer.enableMarkdown(true);
+			answer.setText("Hi! I'm bot on Java");
+			answer.setChatId(message.getChatId());
+			try {
+				execute(answer);
+			} catch (TelegramApiException e) {
+				log.error(e);
+			}
+			log.info("Thread end work");
+		}
 	}
 
 	@Override
