@@ -1,6 +1,7 @@
 package ru.telegram;
 
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Message;
@@ -11,6 +12,9 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 
 public class Bot extends TelegramLongPollingBot {
+	
+	@Autowired
+	private MessageHelper messageHelper;
 	
 	/**
 	 * Логер для бота
@@ -39,11 +43,19 @@ public class Bot extends TelegramLongPollingBot {
 		@Override
 		public void run() {
 			log.info("Start thread for new message");
+			//пока поддерживаются только текстовые сообщения
+			if (!message.hasText()) {
+				return;
+			}
+			if (message.getText() == null || message.getText().length() == 0) {
+				return;
+			}
 			System.out.println(message.getText());
+			String answerString = messageHelper.proccessMessage(message.getText());
 			log.info("chatId " + message.getChatId());
 			SendMessage answer = new SendMessage();
-			answer.enableMarkdown(true);
-			answer.setText("Hi! I'm bot on Java");
+			//answer.enableMarkdown(true);
+			answer.setText(answerString);
 			answer.setChatId(message.getChatId());
 			try {
 				execute(answer);
