@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.ApiContext;
+import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
 import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
@@ -19,6 +20,7 @@ import org.telegram.telegrambots.exceptions.TelegramApiRequestException;
 public class BotRegistry {
 	@Bean
 	public Bot bot() throws TelegramApiRequestException {
+		ApiContextInitializer.init();
 		RequestConfig requestConfig = RequestConfig.custom().setProxy(new HttpHost("198.98.55.168", 8080))
 				.setProxyPreferredAuthSchemes(Arrays.asList(new String[] {"SOCKS4"})).build();
 		DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);

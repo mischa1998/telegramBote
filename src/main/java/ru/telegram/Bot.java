@@ -23,7 +23,8 @@ public class Bot extends TelegramLongPollingBot {
 
 	@Override
 	public void onUpdateReceived(Update update) {
-		//log.info("in update meyhod");
+		//log.info("in update method");
+		update.getMessage().getFrom().getId();
 		new MessageReciever(update.getMessage(), this).start();
 	}
 	
@@ -39,6 +40,7 @@ public class Bot extends TelegramLongPollingBot {
 		public void run() {
 			log.info("Start thread for new message");
 			System.out.println(message.getText());
+			log.info("chatId " + message.getChatId());
 			SendMessage answer = new SendMessage();
 			answer.enableMarkdown(true);
 			answer.setText("Hi! I'm bot on Java");
