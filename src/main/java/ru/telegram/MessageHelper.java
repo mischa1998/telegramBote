@@ -32,7 +32,7 @@ public class MessageHelper {
 			+ "I'm Telegram Java Bot! \n"
 			+ "My commands is: \n"
 			+ "/register your_name (only name without middle name or last name)\n"
-			+ "/users get users list /n"
+			+ "/users get users list \n"
 			+ "/getSong get my favorite song";
 	public static String NOT_SUCH_COMMAND = "Sorry! Not such command in my list yet!";
 	public static String BEGIN_COMAND_SYMBOL = "/";
