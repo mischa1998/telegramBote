@@ -2,3 +2,11 @@
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "DATABASECHANGELOGLOCK" не найдена
 Table "DATABASECHANGELOGLOCK" not found; SQL statement:
 SELECT COUNT(*) FROM PUBLIC.DATABASECHANGELOGLOCK [42102-200]
+2020-01-25 12:18:42 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "HIBERNATE_SEQUENCES" не найдена
+Table "HIBERNATE_SEQUENCES" not found; SQL statement:
+select tbl.next_val from hibernate_sequences tbl where tbl.sequence_name=? for update [42102-200]
+2020-02-01 00:02:05 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Таблица "MESSAGES" уже существует
+Table "MESSAGES" already exists; SQL statement:
+CREATE TABLE PUBLIC.messages (message_id VARCHAR(255) NOT NULL, path VARCHAR(255) NOT NULL, file_id VARCHAR(255) NOT NULL, song_name VARCHAR(255) NOT NULL, CONSTRAINT PK_MESSAGES PRIMARY KEY (message_id)) [42101-200]

@@ -4,6 +4,8 @@ import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.updatingmessages.DeleteMessage;
+import org.telegram.telegrambots.api.objects.Audio;
 import org.telegram.telegrambots.api.objects.Message;
 import org.telegram.telegrambots.api.objects.Update;
 import org.telegram.telegrambots.bots.DefaultBotOptions;
@@ -38,30 +40,30 @@ public class Bot extends TelegramLongPollingBot {
 		
 		public MessageReciever(Message message, Bot bot) {
 			this.message = message;
+			this.bot = bot;
 		}
 		
 		@Override
 		public void run() {
 			log.info("Start thread for new message");
 			//пока поддерживаются только текстовые сообщения
-			if (!message.hasText()) {
-				return;
-			}
-			if (message.getText() == null || message.getText().length() == 0) {
-				return;
-			}
-			System.out.println(message.getText());
-			String answerString = messageHelper.proccessMessage(message.getText());
+
+			
+			messageHelper.proccessMessage(bot, message);
 			log.info("chatId " + message.getChatId());
+			/*
 			SendMessage answer = new SendMessage();
 			//answer.enableMarkdown(true);
 			answer.setText(answerString);
 			answer.setChatId(message.getChatId());
-			try {
-				execute(answer);
-			} catch (TelegramApiException e) {
-				log.error(e);
-			}
+			*/
+			
+			/* удалить сообщение можно так
+			DeleteMessage delete = new DeleteMessage();
+			delete.setChatId("11");
+			delete.setMessageId(12);
+			execute(delete);
+			*/
 			log.info("Thread end work");
 		}
 	}
