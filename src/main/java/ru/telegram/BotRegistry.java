@@ -21,7 +21,9 @@ public class BotRegistry {
 	@Bean
 	public Bot bot() throws TelegramApiRequestException {
 		ApiContextInitializer.init();
-		RequestConfig requestConfig = RequestConfig.custom().setProxy(new HttpHost("198.98.55.168", 8080))
+		//"198.98.56.71", 8080
+		//"198.98.55.168", 8080
+		RequestConfig requestConfig = RequestConfig.custom().setProxy(new HttpHost("198.98.56.71", 8080))
 				.setProxyPreferredAuthSchemes(Arrays.asList(new String[] {"SOCKS4"})).build();
 		DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
 		botOptions.setRequestConfig(requestConfig);

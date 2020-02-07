@@ -7,4 +7,6 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <include file="/db/changelog/create-user-table.xml"/>
+    <include file="/db/changelog/drop-table-messages.xml"/>
+    <include file="/db/changelog/create-message-table.xml"/>
 </databaseChangeLog>
